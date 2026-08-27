@@ -95,26 +95,26 @@ JOIN Student as s ON s.sid=i.bid
 JOIN Book as b ON b.bid=i.bid
 WHERE i.iid IS NOT NULL;
 
--- 3. Show student name, batch, and date of issue for students who issued books after a given date.
+-- 2. Show student name, batch, and date of issue for students who issued books after a given date.
 SELECT s.name,s.Batch,i.dateofissue
 FROM Issues as i
 JOIN Student as s ON s.sid=i.iid
 JOIN Book as b ON b.bid=i.iid
 WHERE dateofissue>2024-01-10;
 
--- 5. Display employee name, designation date (dateofemployee), and book name for all employees who issued books.
+-- 3. Display employee name, designation date (dateofemployee), and book name for all employees who issued books.
 SELECT e.ename, e.dateofemployee, b.bname
 FROM Issues AS i
 JOIN Employee e ON e.eid = i.iid
 JOIN Book b ON b.bid = i.iid
 WHERE i.eid IS NOT NULL;
 
--- 7. List all books along with publication name using Book and Booklist.
+-- 4. List all books along with publication name using Book and Booklist.
 SELECT b.bname,bl.publication
 FROM Booklist as bl
 JOIN Book as b ON b.bid=bl.isbn;
 
--- 9. Find the names of students who have issued more expensive books than the average book price.
+-- 5. Find the names of students who have issued more expensive books than the average book price.
 SELECT s.name,b.bname
 FROM Issues as i
 JOIN Student as s on s.sid=i.iid
@@ -123,18 +123,18 @@ WHERE i.sid IS NOT NULL
 	AND b.price>(SELECT AVG(price) as average_price_of_book FROM Book as b2 );
 
 
--- 11.Find teachers whose salary is greater than the average salary of employees.
+-- 6.Find teachers whose salary is greater than the average salary of employees.
 SELECT * 
 FROM Teacher 
 WHERE salary>(SELECT AVG(salary) FROM Employee);
 
--- 13.Retrieve books that were never issued.
+-- 7.Retrieve books that were never issued.
 SELECT b.bname 
 FROM Issues as i
 JOIN Book as b ON b.bid=i.iid
 WHERE i.iid IS NULL;
 
--- 15.Display the highest priced book issued by any student.
+-- 8.Display the highest priced book issued by any student.
 SELECT b.bname,b.price
 FROM Issues as i
 JOIN Book as b ON b.bid=i.iid
@@ -142,7 +142,7 @@ JOIN Student as s ON s.sid=i.iid
 ORDER BY b.price DESC
 LIMIT 1;
 
--- 17.Write a stored procedure to display all books issued by a given student ID.
+-- 9.Write a stored procedure to display all books issued by a given student ID.
 DELIMITER $$
 
 CREATE PROCEDURE books_issued_by_students(IN p_side INT)
@@ -157,7 +157,7 @@ END$$
 
 DELIMITER $$
 
--- 19.Write a stored procedure to insert a new book into the Book table.
+-- 10.Write a stored procedure to insert a new book into the Book table.
 DELIMITER $$
 
 CREATE PROCEDURE insert_newbook_int0_Booktable(IN p_bid INT,
@@ -170,7 +170,7 @@ BEGIN
 END $$
 DELIMITER ;
 
--- 21.Write a stored procedure that returns the count of books issued by a given user (student/teacher).
+-- 11.Write a stored procedure that returns the count of books issued by a given user (student/teacher).
 DELIMITER $$
 
 CREATE PROCEDURE sp_count_books_issued_by_user(
@@ -200,7 +200,7 @@ END $$
 
 DELIMITER ;
 
--- 23.Write a stored procedure that lists all users who issued books after a given date.
+-- 12.Write a stored procedure that lists all users who issued books after a given date.
 
 DELIMITER $$
 
