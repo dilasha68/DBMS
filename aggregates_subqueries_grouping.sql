@@ -92,21 +92,21 @@ SELECT avg(salary) as average_salary_of_Teacher
 FROM Teacher;
 
 
--- 3 Display the maximum priced book.
+-- 2 Display the maximum priced book.
 SELECT MAX(price) as MAXIMUM_PRICE_OF_BOOK
 FROM Book;
 
 
--- 5 List employees earning more than the average employee salary.
+-- 3 List employees earning more than the average employee salary.
 SELECT * FROM Employee
 WHERE salary>(SELECT AVG(salary) FROM Teacher);
 
 
--- 7 Display the minimum salary among teachers.
+-- 4 Display the minimum salary among teachers.
 SELECT min(salary) FROM Teacher;
 
 
--- 9 Find students who have never issued a book.
+-- 5 Find students who have never issued a book.
 
 SELECT *
 FROM Student s
@@ -115,28 +115,28 @@ LEFT JOIN Issues i
 WHERE i.iid IS NULL;
 
 
--- 11 Find books that have never been issued.
+-- 6 Find books that have never been issued.
 SELECT *
 FROM Book as b
 JOIN Issues as i ON i.iid=b.bid
 WHERE i.iid=NULL;
 
 
--- 13 Find students who issued books after a specific date.
+-- 7 Find students who issued books after a specific date.
 SELECT * 
 FROM Student as s
 JOIN Issues as i ON s.name=i.name
 WHERE i.dateofissue>'2024-01-09';
 
 
--- 15 Find publications that appear more than once in Booklist.
+-- 8 Find publications that appear more than once in Booklist.
 SELECT publication,count(*) as count_of_booklist
 FROM Booklist
 GROUP BY publication
 HAVING count(*)>1;
 
 
--- 17 Find the student who issued the most books.
+-- 9 Find the student who issued the most books.
 SELECT i.name, COUNT(*) AS total_books_issued
 FROM Issues i
 GROUP BY i.name
@@ -144,7 +144,7 @@ ORDER BY total_books_issued DESC
 LIMIT 1;
 
 
--- 19 Find books whose price is higher than the average price of books by the same author.
+-- 10 Find books whose price is higher than the average price of books by the same author.
 SELECT b1.bname,b1.author,b1.price FROM Book as b1
 WHERE b1.price>
 (SELECT AVG(b2.price) 
@@ -152,14 +152,14 @@ FROM Book as b2
 WHERE b1.author=b2.author);
 
 
--- 21 Identify students who issued books on consecutive dates.
+-- 11 Identify students who issued books on consecutive dates.
 SELECT DISTINCT i1.sid 
 FROM Issues as i1
 JOIN Issues as i2 ON i1.sid=i2.sid
  AND i2.dateofissue=DATE_ADD(i1.dateofissue,INTERVAL 1 DAY);
 
 
--- 23 Retrieve students who issued every book issued by a specific student.
+-- 12 Retrieve students who issued every book issued by a specific student.
 SELECT s1.name 
 FROM Student as s1
 JOIN Issues as i ON s1.sid=i.iid
